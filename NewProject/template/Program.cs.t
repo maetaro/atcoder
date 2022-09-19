@@ -10,7 +10,7 @@ class Program
     {
         Console.WriteLine("Hello, World!");
     }
-    private static long ReadLineLong()
+    private static long ReadLine()
     {
         var line = Console.ReadLine();
         if (string.IsNullOrEmpty(line))
@@ -18,6 +18,18 @@ class Program
             throw new Exception($"{nameof(line)} is empty");
         }
         return long.Parse(line);
+    }
+    private static IEnumerable<TResult> ReadLines<TResult>(long count, Func<string, TResult> selector)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var line = Console.ReadLine();
+            yield return selector(line);
+        }
+    }
+    private static long toLong(string s)
+    {
+        return long.Parse(s);
     }
     private static long[] ReadLineLongItems()
     {
