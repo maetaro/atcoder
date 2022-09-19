@@ -10,37 +10,46 @@ class Program
     {
         Console.WriteLine("Hello, World!");
     }
-    private static long ReadLine()
+    private static ulong Gcd(ulong x, ulong y)
+    {
+        if (x == 0) return y;
+        if (y == 0) return x;
+        if (x >= y)
+        {
+            x = x % y;
+        }
+        else
+        {
+            y = y % x;
+        }
+        return Gcd(x, y);
+    }
+    private static ulong ReadLine()
+    {
+        return ReadLine(ulong.Parse);
+    }
+    private static TResult ReadLine<TResult>(Func<string, TResult> selector)
     {
         var line = Console.ReadLine();
         if (string.IsNullOrEmpty(line))
         {
             throw new Exception($"{nameof(line)} is empty");
         }
-        return long.Parse(line);
+        return selector(line);
     }
-    private static IEnumerable<TResult> ReadLines<TResult>(long count, Func<string, TResult> selector)
+    private static IEnumerable<TResult> ReadLines<TResult>(ulong count, Func<string, TResult> selector)
     {
-        for (int i = 0; i < count; i++)
+        for (ulong i = 0; i < count; i++)
         {
             var line = Console.ReadLine();
             yield return selector(line);
         }
     }
-    private static long toLong(string s)
+    private static ulong toLong(string s)
     {
-        return long.Parse(s);
+        return ulong.Parse(s);
     }
-    private static long[] ReadLineLongItems()
-    {
-        var line = Console.ReadLine();
-        if (string.IsNullOrEmpty(line))
-        {
-            throw new Exception($"{nameof(line)} is empty");
-        }
-        return line.Split().Select(e => long.Parse(e)).ToArray();
-    }
-    private static long[] FillArray(int count, long value)
+    private static ulong[] FillArray(int count, ulong value)
     {
         return Enumerable.Range(0, count).Select(e => value).ToArray();
     }
